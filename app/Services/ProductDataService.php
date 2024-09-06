@@ -66,7 +66,11 @@ class ProductDataService
 
     protected function getProductName($info)
     {
-        return implode('', array_slice($info, 0, array_search('(Código:', $info)));
+        $index = array_search('(Código:', $info);
+        if ($index === false) {
+            return implode(' ', $info);
+        }
+        return implode(' ', array_slice($info, 0, $index));
     }
 
     protected function getValueFromPattern($text, $pattern)

@@ -44,15 +44,18 @@ class ProductDataService
         $formattedData = [];
         foreach ($productData as $table) {
             foreach ($table as $row) {
+//                echo "Row value: " . $row[0] . "\n";
                 if (count($row) >= 2) {
                     $item = [];
                     $info = explode(' ', $row[0]);
                     $item['produto'] = $this->getProductName($info);
                     $item['cod'] = $this->getValueFromPattern($row[0], '/Código:\s*(\d+)/');
                     $item['qtd'] = $this->getValueFromPattern($row[0],'/Qtde.:\s*(\d+(?:\.\d+)?)/');
-                    $item['un'] = $this->getValueFromPattern($row[0],'/UN:\s*([A-Z]+)/');
-                    $item['valUnit'] = $this->getValueFromPattern($row[0],'/Vl.\s*Unit.:\s*([\d,\.]+)/');
-                    $item['valTotal'] = $this->getValueFromPattern($row[1],'/Vl.\s*Total\s*([\d,\.]+)/');
+                    $item['un'] = $this->getValueFromPattern($row[0],'/UN:\s*([A-Z]{2})/');
+                    $valUnitRaw = $this->getValueFromPattern($row[0], '/Vl\.?\s*Unit\.?\s*:\s*(.*)/');
+                    $item['valUnit'] = preg_replace('/[^0-9,.]/', '', $valUnitRaw);
+
+                    $item['valTotal'] = $this->getValueFromPattern($row[1],'/Vl.\s*Total\s*([\d,.]+)/');
 
                     $formattedData['itens'][] = $item;
 

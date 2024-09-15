@@ -7,5 +7,5 @@ Route::get('/', function () {
 });
 
 Route::get('/ping', function () {
-    return ["response" => "pong"];
+    return ['response' => 'pong'];
 });

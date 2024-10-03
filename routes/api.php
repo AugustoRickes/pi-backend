@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 // http://localhost:8000/api
 
+Route::post('/login', [UserController::class, 'loginUser']);
 Route::post('/register', [UserController::class, 'createUser']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

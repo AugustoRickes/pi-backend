@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "a0fb84d6-873a-4886-9917-b1673223aefc",
+		"name": "compra-certa-api",
+		"description": "Deixei uma breve explicação em cada rota que foi criada",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38650512",
+		"_collection_link": "https://restless-crescent-50061.postman.co/workspace/cf6ca72c-17a4-47ce-baa3-b8e7efe68333/collection/26230949-a0fb84d6-873a-4886-9917-b1673223aefc?action=share&source=collection_link&creator=38650512"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Lilweek",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "teste@testando.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "LW123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "Faz autenticação com um usuário que existe no database e devolve o token que é necessário para realizar request em rotas protegidas"
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Lilweek",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "teste@testando.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "LW123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"register"
+					]
+				},
+				"description": "Cria um usuário no banco de dados com a senha criptografada"
+			},
+			"response": []
+		},
+		{
+			"name": "user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5TGW1f3fNjVJ5gPsB34j5xDqRZIz78fXU2cSxn9E202c153a",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/user",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"user"
+					]
+				},
+				"description": "Traz os dados do usuario logado, precisa passar o token que é retornado no login"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"value": "",
+			"type": "string",
+			"disabled": true
+		}
+	]
+}

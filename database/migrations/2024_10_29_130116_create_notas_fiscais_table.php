@@ -10,16 +10,16 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('notas_fiscais', function (Blueprint $table) {
-            $table->uuid('nota_fiscal_uuid')->primary();
+        Schema::create('notafiscal', function (Blueprint $table) {
+            $table->uuid('nota_fiscal_id')->primary();
             $table->uuid('usuario_uuid');
             $table->string('estabelecimento_cnpj', 14);
             $table->timestamp('data_emissao');
             $table->decimal('valor_total', 18, 2);
             $table->timestamps();
 
-            $table->foreign('usuario_uuid')->references('uuid')->on('usuarios')->onDelete('cascade');
-            $table->foreign('estabelecimento_cnpj')->references('cnpj')->on('estabelecimentos')->onDelete('cascade');
+            $table->foreign('usuario_uuid')->references('uuid')->on('usuario')->onDelete('cascade');
+            $table->foreign('estabelecimento_cnpj')->references('cnpj')->on('estabelecimento')->onDelete('cascade');
 
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('notas_fiscais');
+        Schema::dropIfExists('notafiscal');
     }
 };

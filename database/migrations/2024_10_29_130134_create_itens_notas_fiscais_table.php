@@ -10,17 +10,17 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('itens_notas_fiscais', function (Blueprint $table) {
+        Schema::create('itemnotafiscal', function (Blueprint $table) {
             $table->uuid('item_id')->primary();
-            $table->uuid('nota_fiscal_uuid');
+            $table->uuid('nota_fiscal_id');
             $table->string('produto_codigo', 255);
             $table->integer('quantidade');
             $table->decimal('valor_unitario', 18, 2);
             $table->decimal('valor_total', 18, 2);
             $table->timestamps();
 
-            $table->foreign('nota_fiscal_uuid')->references('nota_fiscal_uuid')->on('notas_fiscais')->onDelete('cascade');
-            $table->foreign('produto_codigo')->references('codigo')->on('produtos')->onDelete('cascade');
+            $table->foreign('nota_fiscal_id')->references('nota_fiscal_id')->on('notafiscal')->onDelete('cascade');
+            $table->foreign('produto_codigo')->references('codigo')->on('produto')->onDelete('cascade');
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('itens_notas_fiscais');
+        Schema::dropIfExists('itemnotafiscal');
     }
 };

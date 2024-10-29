@@ -61,6 +61,7 @@ class ProductDataService
                 }
             }
         }
+
         return $formattedData;
     }
 

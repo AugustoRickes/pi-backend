@@ -11,6 +11,9 @@ class ProductDataService
         $response = Http::get($url);
         $htmlContent = $response->body();
 
+        $companyName = $this->getValueFromPattern($htmlContent, '/id="u20"\s*class="txtTopo">([^<]+)</');
+        $cnpj = $this->getValueFromPattern($htmlContent, '/CNPJ:\s*([\d.\/-]+)/');
+
         $dom = new \DOMDocument();
         @$dom->loadHTML($htmlContent);
 
@@ -36,7 +39,13 @@ class ProductDataService
             $productData[] = $tableRows;
         }
 
-        return $this->formatProductData($productData);
+        return [
+            'empresa' => [
+                'nome' => $companyName,
+                'cnpj' => $cnpj,
+            ],
+            'itens' => $this->formatProductData($productData),
+        ];
     }
 
     protected function formatProductData(array $productData): array
@@ -56,7 +65,7 @@ class ProductDataService
 
                     $item['valTotal'] = $this->getValueFromPattern($row[1], '/Vl.\s*Total\s*([\d,.]+)/');
 
-                    $formattedData['itens'][] = $item;
+                    $formattedData[] = $item;
 
                 }
             }

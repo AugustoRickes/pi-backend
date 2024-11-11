@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\ProductDataService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProductDataController extends Controller
@@ -14,7 +15,7 @@ class ProductDataController extends Controller
         $this->productDataService = $productDataService;
     }
 
-    public function fetchProductData(): \Illuminate\Http\JsonResponse
+    public function fetchProductData(): JsonResponse
     {
         // URLS para testar
         // https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx?p=43240894846755000740651280000866771952778479|2|1|1|D3C1B1353C81074ECBEB1C4F326F83ABF59722DA

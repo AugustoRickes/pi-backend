@@ -62,8 +62,11 @@ class ProductDataService
                     $item['un'] = $this->getValueFromPattern($row[0], '/UN:\s*([A-Z]{2})/');
                     $valUnitRaw = $this->getValueFromPattern($row[0], '/Vl\.?\s*Unit\.?\s*:\s*(.*)/');
                     $item['valUnit'] = preg_replace('/[^0-9,.]/', '', $valUnitRaw);
+                    $item['valUnit'] = str_replace(',', '.', $item['valUnit']);
 
                     $item['valTotal'] = $this->getValueFromPattern($row[1], '/Vl.\s*Total\s*([\d,.]+)/');
+                    $item['valTotal'] = str_replace(',', '.', $item['valTotal']);
+
 
                     $formattedData[] = $item;
 

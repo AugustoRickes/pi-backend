@@ -8,4 +8,26 @@ use Illuminate\Database\Eloquent\Model;
 class Estabelecimento extends Model
 {
     use HasFactory;
+
+    protected $table = 'estabelecimento';
+
+    protected $primaryKey = 'cnpj';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
+    protected $fillable = [
+        'cnpj',
+        'nome',
+        'razao_social',
+        'endereco',
+        'cidade',
+        'estado',
+        'latitude',
+        'longitude',
+    ];
+
+    public function notasFiscais()
+    {
+        return $this->hasMany(NotaFiscal::class, 'estabelecimento_cnpj', 'cnpj');
+    }
 }

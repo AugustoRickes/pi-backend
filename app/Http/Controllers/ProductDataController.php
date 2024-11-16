@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ItemNotaFiscal;
+use App\Models\NotaFiscal;
 use App\Services\ProductDataService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ProductDataController extends Controller
 {
@@ -15,18 +19,55 @@ class ProductDataController extends Controller
         $this->productDataService = $productDataService;
     }
 
-    public function fetchProductData(): JsonResponse
+    public function processProductData(Request $request): JsonResponse
     {
-        // URLS para testar
-        // https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx?p=43240894846755000740651280000866771952778479|2|1|1|D3C1B1353C81074ECBEB1C4F326F83ABF59722DA
+        $request->validate([
+            'url' => [
+                'required',
+                'regex:/^https?:\/\/[a-zA-Z0-9\-\.]+(\:[0-9]+)?(\/[^\s]*)?$/'
+            ],
+        ]);
 
-        // https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx?p=43240824033518000190651050000979591105779678|2|1|1|4065753AC639EED0C5DD9D7378126813E37E1BCA
+        $url = $request->input('url');
+//        $url = 'https://dfe-portal.svrs.rs.gov.br/Dfe/QrCodeNFce?p=43240894846755000740651280000866771952778479|2|1|1|D3C1B1353C81074ECBEB1C4F326F83ABF59722DA';
+        try {
+            $productData = $this->productDataService->getProductDataFromTable($url);
+//            dd($productData);
 
-        // https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx?p=43240804005894000163650050001987311648873390|2|1|2|1E4FBD566B548A07853BC940A17E153EE760D610
+//            dd($request->user());
+            DB::transaction(function () use ($productData) {
+                $notaFiscal = NotaFiscal::create(
+                    [
+                        'user_id' => auth()->id(),
+                        'estabelecimento_cnpj' => $productData['empresa']['cnpj'],
+                        'data_emissao' => now(),
+//                        'valor_total' => $productData['valor_total'], tem que calcular o valor total na NF? @alusio
+                    ]
+                );
+//            dd($notaFiscal);
+                foreach ($productData['itens'] as $item) {
+                    ItemNotaFiscal::create(
+                        [
+                            'nota_fiscal_id' => $notaFiscal->id,
+                            'produto_codigo' => $item['cod'],
+                        
+                            'quantidade' => $item['qtd'] ?? 0,
+                            'valor_unitario' => $item['valUnit'] ?? 0,
+                            'valor_total' => $item['valTotal'] ?? 0,
+                        ]
+                    );
+                }
+            });
 
-        $url = 'https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx?p=43240894846755000740651280000866771952778479|2|1|1|D3C1B1353C81074ECBEB1C4F326F83ABF59722DA';
-        $productData = $this->productDataService->getProductDataFromTable($url);
+            return response()->json(['message' => 'dados processados e armazenados no banco ok'], 201);
 
-        return response()->json($productData);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'erro no processamento e armazenamento',
+                'details' => $e->getMessage(),
+            ], 500);
+
+        }
+
     }
 }

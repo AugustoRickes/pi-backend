@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "a0fb84d6-873a-4886-9917-b1673223aefc",
 		"name": "no-precinho",
-		"description": "Deixei uma breve explicação em cada rota que foi criada",
+		"description": "Deixei uma breve explicação em cada rota que foi criada\n\n``` markdown\n// URLS para testar\nhttps://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx?p=43240894846755000740651280000866771952778479|2|1|1|D3C1B1353C81074ECBEB1C4F326F83ABF59722DA\nhttps://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx?p=43240824033518000190651050000979591105779678|2|1|1|4065753AC639EED0C5DD9D7378126813E37E1BCA\nhttps://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx?p=43240804005894000163650050001987311648873390|2|1|2|1E4FBD566B548A07853BC940A17E153EE760D610\n\n ```",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "38650512",
 		"_collection_link": "https://restless-crescent-50061.postman.co/workspace/pi-backend~cf6ca72c-17a4-47ce-baa3-b8e7efe68333/collection/26230949-a0fb84d6-873a-4886-9917-b1673223aefc?action=share&source=collection_link&creator=38650512"
@@ -74,7 +74,7 @@
 					"formdata": [
 						{
 							"key": "name",
-							"value": "Augusto Rickes",
+							"value": "teste",
 							"type": "text"
 						},
 						{
@@ -111,7 +111,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "xIenPhGW85XWVE8flESKCAKYUAv9KftGeSgXCGQJ5dfd7cb6",
+							"value": "DscbAPr42NwOk9gRgo7qc9dwfQ19wVD3PRogMCk8e0562ee6",
 							"type": "string"
 						}
 					]
@@ -186,7 +186,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"url\": \"https://www.google.com.br/?hl=pt-BR\"\n}",
+					"raw": "{\n    \"url\": \"https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx?p=43240894846755000740651280000866771952778479|2|1|1|D3C1B1353C81074ECBEB1C4F326F83ABF59722DA\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -201,6 +201,49 @@
 					"path": [
 						"api",
 						"receive-url"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "process-and-store-url",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "QfMcE5fSNv8UkaMGwG6wmarHNVexzUduN9bagST5dca6d312",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"url\": \"https://dfe-portal.svrs.rs.gov.br/Dfe/QrCodeNFce?p=43240894846755000740651280000866771952778479|2|1|1|D3C1B1353C81074ECBEB1C4F326F83ABF59722DA\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/process-url",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"process-url"
 					]
 				}
 			},

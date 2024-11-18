@@ -11,14 +11,15 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('estabelecimento', function (Blueprint $table) {
-            $table->string('cnpj', 14)->primary();
+            $table->id();
+            $table->string('cnpj', 14)->unique();
             $table->string('nome', 255);
-            $table->string('razao_social', 255);
-            $table->string('endereco', 255);
-            $table->string('cidade', 255);
-            $table->string('estado', 255);
-            $table->float('latitude');
-            $table->float('longitude');
+            $table->string('razao_social', 255)->nullable();
+            $table->string('endereco', 255)->nullable();
+            $table->string('cidade', 255)->nullable();
+            $table->string('estado', 255)->nullable();
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
             $table->timestamps();
         });
     }

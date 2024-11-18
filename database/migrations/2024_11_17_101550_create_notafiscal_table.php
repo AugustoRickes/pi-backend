@@ -13,13 +13,13 @@ return new class extends Migration {
         Schema::create('notafiscal', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('estabelecimento_cnpj', 18);
+            $table->unsignedInteger('estabelecimento_id');
             $table->timestamp('data_emissao');
             $table->decimal('valor_total', 18, 2)->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-//            $table->foreign('estabelecimento_cnpj')->references('cnpj')->on('estabelecimento')->onDelete('cascade');
+            $table->foreign('estabelecimento_id')->references('id')->on('estabelecimento')->onDelete('cascade');
 
         });
     }

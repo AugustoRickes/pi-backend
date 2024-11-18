@@ -13,14 +13,14 @@ return new class extends Migration {
         Schema::create('itemnotafiscal', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('nota_fiscal_id');
-            $table->string('produto_codigo', 255);
+            $table->unsignedBigInteger('produto_id');
             $table->integer('quantidade');
             $table->decimal('valor_unitario', 18, 2);
             $table->decimal('valor_total', 18, 2);
             $table->timestamps();
 
             $table->foreign('nota_fiscal_id')->references('id')->on('notafiscal')->onDelete('cascade');
-//            $table->foreign('produto_codigo')->references('codigo')->on('produto')->onDelete('cascade');
+            $table->foreign('produto_id')->references('id')->on('produto')->onDelete('cascade');
         });
     }
 

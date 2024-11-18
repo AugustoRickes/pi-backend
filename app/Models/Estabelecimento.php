@@ -11,10 +11,6 @@ class Estabelecimento extends Model
 
     protected $table = 'estabelecimento';
 
-    protected $primaryKey = 'cnpj';
-    public $incrementing = false;
-    protected $keyType = 'string';
-
     protected $fillable = [
         'cnpj',
         'nome',
@@ -23,11 +19,12 @@ class Estabelecimento extends Model
         'cidade',
         'estado',
         'latitude',
-        'longitude',
+        'longitude'
     ];
+
 
     public function notasFiscais()
     {
-        return $this->hasMany(NotaFiscal::class, 'estabelecimento_cnpj', 'cnpj');
+        return $this->hasMany(NotaFiscal::class, 'estabelecimento_id', 'id');
     }
 }

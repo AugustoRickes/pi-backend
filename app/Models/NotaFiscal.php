@@ -11,25 +11,16 @@ class NotaFiscal extends Model
 
     protected $table = 'notafiscal';
 
-//    protected $primaryKey = 'nota_fiscal_id';
-
-//    public $incrementing = false;
-//
-//    protected $keyType = 'string';
-//
-//    public $timestamps = false;
-
     protected $fillable = [
-//        'id',
         'user_id',
-        'estabelecimento_cnpj',
+        'estabelecimento_id',
         'data_emissao',
         'valor_total'
     ];
 
     public function itensNotaFiscal()
     {
-        return $this->hasMany(ItemNotaFiscal::class, 'nota_fiscal_id', 'nota_fiscal_id');
+        return $this->hasMany(ItemNotaFiscal::class, 'nota_fiscal_id', 'id');
     }
 
     public function usuario()
@@ -39,6 +30,6 @@ class NotaFiscal extends Model
 
     public function estabelecimento()
     {
-        return $this->belongsTo(Estabelecimento::class, 'estabelecimento_cnpj', 'cnpj');
+        return $this->belongsTo(Estabelecimento::class, 'estabelecimento_id', 'id');
     }
 }

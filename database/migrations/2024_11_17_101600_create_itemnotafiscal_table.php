@@ -11,16 +11,16 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('itemnotafiscal', function (Blueprint $table) {
-            $table->uuid('item_id')->primary();
-            $table->uuid('nota_fiscal_id');
-            $table->string('produto_codigo', 255);
+            $table->id();
+            $table->unsignedBigInteger('nota_fiscal_id');
+            $table->unsignedBigInteger('produto_id');
             $table->integer('quantidade');
             $table->decimal('valor_unitario', 18, 2);
             $table->decimal('valor_total', 18, 2);
             $table->timestamps();
 
-            $table->foreign('nota_fiscal_id')->references('nota_fiscal_id')->on('notafiscal')->onDelete('cascade');
-            $table->foreign('produto_codigo')->references('codigo')->on('produto')->onDelete('cascade');
+            $table->foreign('nota_fiscal_id')->references('id')->on('notafiscal')->onDelete('cascade');
+            $table->foreign('produto_id')->references('id')->on('produto')->onDelete('cascade');
         });
     }
 

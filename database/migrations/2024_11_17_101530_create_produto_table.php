@@ -10,15 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('usuario', function (Blueprint $table) {
-            $table->uuid('uuid')->primary();
+        Schema::create('produto', function (Blueprint $table) {
+            $table->id();
             $table->string('nome', 255);
-            $table->string('cidade', 255);
-            $table->string('estado', 255);
-            $table->string('localizacao', 255)->nullable();
-            $table->boolean('tem_carro');
-            $table->float('km_por_litro');
-            $table->integer('kudos');
+            $table->string('marca', 255)->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('usuario');
+        Schema::dropIfExists('produto');
     }
 };

@@ -21,6 +21,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'cidade',
+        'estado',
+        'localizacao',
+        'tem_carro',
+        'km_por_litro',
+        'kudos',
     ];
 
     /**

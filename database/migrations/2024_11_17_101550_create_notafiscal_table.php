@@ -11,15 +11,15 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('notafiscal', function (Blueprint $table) {
-            $table->uuid('nota_fiscal_id')->primary();
-            $table->uuid('usuario_uuid');
-            $table->string('estabelecimento_cnpj', 14);
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedInteger('estabelecimento_id');
             $table->timestamp('data_emissao');
-            $table->decimal('valor_total', 18, 2);
+            $table->decimal('valor_total', 18, 2)->nullable();
             $table->timestamps();
 
-            $table->foreign('usuario_uuid')->references('uuid')->on('usuario')->onDelete('cascade');
-            $table->foreign('estabelecimento_cnpj')->references('cnpj')->on('estabelecimento')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('estabelecimento_id')->references('id')->on('estabelecimento')->onDelete('cascade');
 
         });
     }

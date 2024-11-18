@@ -10,11 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('produto', function (Blueprint $table) {
-            $table->string('codigo', 255)->primary();
-            $table->string('nome', 255);
-            $table->string('marca', 255);
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer('kudos')->default(10)->nullable(false)->change();
+
         });
     }
 
@@ -23,6 +21,9 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('produto');
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer('kudos')->nullable()->change();
+
+        });
     }
 };

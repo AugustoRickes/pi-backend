@@ -15,3 +15,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::post('/receive-url', [UrlController::class, 'receiveUrl']);
 Route::middleware('auth:sanctum')->post('/process-url', [ProductDataController::class, 'processProductData']);
+
+Route::middleware('auth:sanctum')->get('/user/details', [UserController::class, 'getUserDetails']);
